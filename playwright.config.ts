@@ -24,7 +24,9 @@ export default defineConfig({
     command: "npm run build && npm run start",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
-    timeout: 30000,
+    // GitHub-hosted runners need extra time for the first production build;
+    // local runs remain fast, but the server startup gate must not be flaky.
+    timeout: process.env.CI ? 120000 : 30000,
     env: {
       DATA_SOURCE: "mock",
       NEXTAUTH_SECRET: "test-only-nextauth-secret-not-for-production",
