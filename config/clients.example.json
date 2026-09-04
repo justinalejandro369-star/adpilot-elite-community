@@ -1,0 +1,68 @@
+{
+  "clients": [
+    {
+      "name": "Northstar Coffee",
+      "slug": "northstar",
+      "spreadsheet_id": "replace-with-your-spreadsheet-id",
+      "sheet_name": "Daily Metrics",
+      "currency": "MXN",
+      "timezone": "America/Mexico_City",
+      "accounts": [
+        { "id": "act_demo_northstar", "name": "Northstar Demo Account" }
+      ],
+      "alert_thresholds": {
+        "ctr_min": 0.8,
+        "cpc_max_mxn": 12,
+        "frequency_max": 4,
+        "roas_winner": 3,
+        "spend_zero_clicks_min": 400
+      },
+      "competitors": [
+        {
+          "name": "Example Competitor",
+          "facebook_page_id": "replace-with-page-id",
+          "niche": "specialty coffee",
+          "notes": "Synthetic configuration for local development"
+        }
+      ]
+    },
+    {
+      "name": "Aurora Studio",
+      "slug": "aurora",
+      "spreadsheet_id": "replace-with-your-spreadsheet-id",
+      "sheet_name": "Daily Metrics",
+      "currency": "MXN",
+      "timezone": "America/Mexico_City",
+      "accounts": [
+        { "id": "act_demo_aurora", "name": "Aurora Demo Account" }
+      ],
+      "alert_thresholds": {
+        "ctr_min": 0.7,
+        "cpc_max_mxn": 15,
+        "frequency_max": 4,
+        "roas_winner": 2.8,
+        "spend_zero_clicks_min": 400
+      },
+      "competitors": []
+    },
+    {
+      "name": "Atlas Wellness",
+      "slug": "atlas",
+      "spreadsheet_id": "replace-with-your-spreadsheet-id",
+      "sheet_name": "Daily Metrics",
+      "currency": "USD",
+      "timezone": "America/New_York",
+      "accounts": [
+        { "id": "act_demo_atlas", "name": "Atlas Demo Account" }
+      ],
+      "alert_thresholds": {
+        "ctr_min": 0.7,
+        "cpc_max_usd": 2.5,
+        "frequency_max": 4,
+        "roas_winner": 3,
+        "spend_zero_clicks_min": 25
+      },
+      "competitors": []
+    }
+  ]
+}
