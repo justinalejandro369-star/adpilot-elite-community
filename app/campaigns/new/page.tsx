@@ -192,7 +192,19 @@ const clients = [
   { slug: "northstar", name: "Northstar" },
   { slug: "aurora", name: "Aurora" },
   { slug: "atlas", name: "Atlas" },
-];
+] as const;
+
+type ClientSlug = (typeof clients)[number]["slug"];
+
+const clientCampaignPaths: Record<ClientSlug, string> = {
+  northstar: "/client/northstar/campaigns",
+  aurora: "/client/aurora/campaigns",
+  atlas: "/client/atlas/campaigns",
+};
+
+function isClientSlug(value: string | null): value is ClientSlug {
+  return clients.some((client) => client.slug === value);
+}
 
 const objectives: { value: Objective; label: string }[] = [
   { value: "OUTCOME_SALES", label: "Ventas" },
@@ -266,13 +278,17 @@ export default function CampaignWizardPage() {
 
 function CampaignWizardInner() {
   const searchParams = useSearchParams();
-  const initialClient = searchParams.get("client") || "northstar";
+  const clientParam = searchParams.get("client");
+  const initialClient: ClientSlug = isClientSlug(clientParam)
+    ? clientParam
+    : "northstar";
 
   const [step, setStep] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
 
   // Step 1
-  const [selectedClient, setSelectedClient] = useState(initialClient);
+  const [selectedClient, setSelectedClient] =
+    useState<ClientSlug>(initialClient);
   const [campaignName, setCampaignName] = useState("");
   const [objective, setObjective] = useState<Objective>("OUTCOME_SALES");
   const [budgetType, setBudgetType] = useState<"CBO" | "ABO">("CBO");
@@ -357,7 +373,7 @@ function CampaignWizardInner() {
       {/* Header */}
       <div className="flex items-center gap-4">
         <Link
-          href={`/client/${selectedClient}/campaigns`}
+          href={clientCampaignPaths[selectedClient]}
           className="p-2 text-[#c6c6cd] hover:text-[#dae2fd] transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -427,7 +443,11 @@ function CampaignWizardInner() {
                 </label>
                 <select
                   value={selectedClient}
-                  onChange={(e) => setSelectedClient(e.target.value)}
+                  onChange={(e) => {
+                    if (isClientSlug(e.target.value)) {
+                      setSelectedClient(e.target.value);
+                    }
+                  }}
                   className="w-full bg-[#222a3d] border border-white/[0.06] rounded-lg text-[#dae2fd] px-4 py-2.5"
                 >
                   {clients.map((c) => (
@@ -965,7 +985,7 @@ function CampaignWizardInner() {
             </p>
             <div className="flex gap-3 justify-center pt-2">
               <Link
-                href={`/client/${selectedClient}/campaigns`}
+                href={clientCampaignPaths[selectedClient]}
                 className="px-6 py-2.5 bg-[#e9c176] text-[#412d00] rounded-lg font-bold hover:bg-[#e9c176]/90 transition-colors"
               >
                 Ver Campanas
